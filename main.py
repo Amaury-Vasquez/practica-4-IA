@@ -1,15 +1,32 @@
 from scipy.spatial.distance import cityblock
 from laberinto import Tree, Coordinate, Road
 
-start = Coordinate(2, 0)
-# end = Coordinate(3, 2)
-end = Coordinate(13, 19)
+labyrinth = [
+    ["0", "0", "S", "0", "0", "1", "1", "0", "0", "0", "0", "0", "1", "1", "1", "1", "1", "1", "1", "1"],
+    ["0", "1", "0", "1", "0", "0", "0", "0", "0", "0", "1", "0", "0", "0", "1", "0", "1", "1", "1", "1"],
+    ["0", "0", "1", "1", "0", "1", "1", "0", "0", "1", "1", "1", "1", "0", "1", "0", "1", "0", "0", "1"],
+    ["1", "0", "0", "0", "0", "0", "0", "0", "0", "1", "0", "0", "0", "0", "0", "0", "1", "1", "0", "1"],
+    ["1", "1", "0", "1", "1", "1", "1", "0", "1", "1", "1", "1", "1", "1", "1", "0", "1", "1", "0", "1"],
+    ["1", "0", "0", "0", "0", "0", "1", "0", "1", "0", "0", "1", "1", "1", "1", "0", "1", "1", "0", "1"],
+    ["1", "0", "1", "0", "0", "1", "1", "1", "1", "1", "0", "0", "0", "0", "1", "0", "1", "0", "0", "1"],
+    ["1", "0", "0", "0", "1", "0", "0", "0", "0", "1", "0", "1", "1", "1", "1", "0", "0", "1", "0", "1"],
+    ["1", "0", "1", "1", "1", "0", "1", "1", "0", "1", "0", "1", "0", "0", "0", "0", "1", "1", "0", "1"],
+    ["1", "0", "0", "0", "1", "0", "1", "1", "0", "1", "0", "1", "1", "1", "1", "0", "1", "1", "0", "1"],
+    ["1", "0", "1", "1", "1", "0", "1", "0", "0", "0", "0", "0", "0", "0", "1", "0", "1", "0", "0", "1"],
+    ["0", "0", "0", "0", "0", "1", "1", "0", "1", "1", "1", "1", "1", "0", "1", "0", "1", "1", "1", "1"],
+    ["0", "1", "1", "1", "1", "1", "1", "0", "1", "0", "0", "0", "1", "0", "1", "0", "1", "0", "1", "1"],
+    ["0", "0", "0", "0", "0", "1", "0", "0", "1", "0", "1", "0", "1", "0", "0", "0", "1", "0", "0", "1"],
+    ["0", "1", "1", "1", "1", "1", "1", "0", "1", "0", "1", "0", "1", "1", "1", "1", "1", "1", "1", "1"],
+    ["0", "1", "1", "0", "0", "0", "0", "0", "1", "0", "1", "0", "0", "0", "0", "1", "1", "1", "1", "1"],
+    ["0", "1", "0", "0", "1", "1", "0", "0", "0", "0", "1", "1", "1", "1", "0", "0", "0", "0", "0", "1"],
+    ["0", "0", "0", "1", "1", "1", "1", "0", "1", "1", "1", "0", "0", "0", "0", "1", "1", "1", "1", "1"],
+    ["1", "1", "0", "0", "0", "0", "0", "0", "0", "0", "1", "1", "1", "0", "0", "0", "0", "0", "0", "1"],
+    ["1", "1", "0", "0", "1", "1", "0", "1", "1", "0", "0", "0", "0", "0", "1", "1", "1", "1", "0", "1"],
+    ["1", "1", "1", "0", "0", "0", "0", "0", "0", "1", "1", "1", "1", "1", "1", "1", "1", "1", "E", "1"],
+]
 
-def print_coordinates(coordinates: list):
-  print("\t\tCoordinates: \n\t\t[")
-  for coordinate in coordinates:
-    print("\t\t\t" + coordinate.__str__() + ",")
-  print("\t\t]")
+start = Coordinate(2, 0)
+end = Coordinate(18, 19)
       
 def get_manhattan_distance(position: Coordinate) -> int:
   return cityblock([position.x, position.y], [end.x, end.y])
@@ -43,57 +60,21 @@ def get_next_positions(current: Coordinate, previous: Coordinate):
   coordinates.sort(key=get_manhattan_distance)
   return coordinates
 
-def print_tree(tree: Tree):
-  current = tree
-  while (current):
-    print(current)
-    current = current.best
-    
-labyrinth = [
-    ["0", "0", "S", "0", "1", "1", "1", "0", "0", "0", "0", "0", "1", "1", "1", "1", "1", "1", "1", "1"],
-    ["0", "1", "0", "1", "0", "0", "0", "0", "0", "0", "1", "0", "0", "0", "1", "0", "1", "1", "1", "1"],
-    ["0", "0", "1", "1", "1", "1", "1", "0", "0", "1", "1", "1", "1", "0", "1", "0", "1", "0", "0", "1"],
-    ["1", "0", "0", "1", "0", "0", "0", "0", "0", "1", "0", "0", "0", "0", "0", "0", "1", "1", "0", "1"],
-    ["1", "1", "0", "1", "1", "1", "1", "0", "1", "1", "1", "1", "1", "1", "1", "0", "1", "1", "0", "1"],
-    ["1", "0", "0", "0", "0", "0", "1", "0", "1", "0", "0", "1", "1", "1", "1", "0", "1", "1", "0", "1"],
-    ["1", "0", "1", "0", "0", "1", "1", "1", "1", "1", "0", "0", "0", "0", "1", "0", "1", "0", "0", "1"],
-    ["1", "0", "0", "0", "1", "0", "0", "0", "0", "1", "0", "1", "1", "1", "1", "0", "0", "1", "0", "1"],
-    ["1", "0", "1", "1", "1", "0", "1", "1", "0", "1", "0", "1", "0", "0", "0", "0", "1", "1", "0", "1"],
-    ["1", "0", "0", "0", "1", "0", "1", "1", "0", "1", "0", "1", "1", "1", "1", "0", "1", "1", "0", "1"],
-    ["1", "0", "1", "1", "1", "0", "1", "0", "0", "0", "0", "0", "0", "0", "1", "0", "1", "0", "0", "1"],
-    ["0", "0", "0", "0", "0", "1", "1", "0", "1", "1", "1", "1", "1", "0", "1", "0", "1", "1", "1", "1"],
-    ["0", "1", "1", "1", "1", "1", "1", "0", "1", "0", "0", "0", "1", "0", "1", "0", "1", "0", "1", "1"],
-    ["0", "0", "0", "0", "0", "1", "0", "0", "1", "0", "1", "0", "1", "0", "0", "0", "1", "0", "0", "1"],
-    ["0", "1", "1", "1", "1", "1", "1", "0", "1", "0", "1", "0", "1", "1", "0", "1", "1", "1", "1", "1"],
-    ["0", "1", "1", "0", "0", "0", "0", "0", "1", "0", "1", "0", "0", "0", "0", "1", "1", "1", "1", "1"],
-    ["0", "1", "0", "0", "1", "1", "0", "0", "0", "0", "1", "1", "1", "1", "0", "0", "0", "0", "0", "1"],
-    ["0", "0", "0", "1", "1", "1", "1", "0", "1", "1", "1", "0", "0", "0", "0", "1", "1", "1", "1", "1"],
-    ["1", "1", "0", "0", "0", "0", "0", "0", "0", "0", "1", "1", "1", "0", "0", "0", "0", "0", "0", "1"],
-    ["1", "1", "0", "0", "1", "1", "0", "1", "1", "0", "0", "0", "0", "0", "1", "1", "1", "1", "1", "1"],
-    ["1", "1", "1", "0", "0", "0", "0", "0", "0", "1", "1", "1", "1", "E", "1", "1", "1", "1", "1", "1"],
-]
-
-# labyrinth = [
-#   ["0", "S", "0", "0", "0"],
-#   ["0", "1", "1", "1", "1"],
-#   ["0", "0", "1", "E", "0"],
-#   ["0", "0", "0", "0", "0"]
-# ]
-
 if __name__ == "__main__":
   tree_head = Tree(start)
   solution_found = False
   no_possible_moves = False
   road = []
+  print("Labyrinth:")
   for row in labyrinth:
     print(row)
+  print("\n\n")
   # The graph will be created at the same time as the algorithm is running
   iterations = 0
   current_node = tree_head  
   while not no_possible_moves and not solution_found:
     previous_position = current_node.previous.position if current_node.previous else Coordinate(-1, -1)
     next_positions = get_next_positions(current_node.position, previous_position)
-    print(current_node)
     # Solution found
     if (current_node.position == end):
       solution_found = True
@@ -109,11 +90,6 @@ if __name__ == "__main__":
 
     # Choosing the best move
     elif (not current_node.best and len(next_positions) > 0 and next_positions[0] not in road):
-      if (current_node.previous and current_node.previous.position == next_positions[0]):
-        current_node = current_node.previous
-        if (len(road) > 0):
-          road.pop()
-      else:
         best_coordinate = next_positions[0]
         best_node = Tree(best_coordinate)
         best_node.previous = current_node
@@ -123,11 +99,6 @@ if __name__ == "__main__":
     
     # Choosing the middle move
     elif (not current_node.middle and len(next_positions) > 1 and next_positions[1] not in road):
-      if (current_node.previous and current_node.previous.position == next_positions[1]):
-        current_node = current_node.previous
-        if (len(road) > 0):
-          road.pop()
-      else:
         middle_coordinate = next_positions[1]
         middle_node = Tree(middle_coordinate)
         middle_node.previous = current_node
@@ -137,11 +108,6 @@ if __name__ == "__main__":
     
     # Choosing the worst move
     elif (not current_node.worst and len(next_positions) > 2 and next_positions[2] not in road):
-      if (current_node.previous and current_node.previous.position == next_positions[2]):
-        current_node = current_node.previous
-        if (len(road) > 0):
-          road.pop()
-      else:
         worst_coordinate = next_positions[2]
         worst_node = Tree(worst_coordinate)
         worst_node.previous = current_node
@@ -159,7 +125,7 @@ if __name__ == "__main__":
   
   for step in road:
     labyrinth[step.position.y][step.position.x] = " "
-    
+  print("Solved labyrinth:")
   for row in labyrinth:
     print(row)
   
