@@ -2,8 +2,8 @@ from scipy.spatial.distance import cityblock
 from laberinto import Tree, Coordinate, Road
 
 labyrinth = [
-    ["0", "0", "S", "0", "0", "1", "1", "0", "0", "0", "0", "0", "1", "1", "1", "1", "1", "1", "1", "1"],
-    ["0", "1", "0", "1", "0", "0", "0", "0", "0", "0", "1", "0", "0", "0", "1", "0", "1", "1", "1", "1"],
+    ["1", "0", "S", "0", "0", "1", "1", "0", "0", "0", "0", "0", "1", "1", "1", "1", "1", "1", "1", "1"],
+    ["0", "1", "0", "1", "1", "0", "0", "0", "0", "0", "1", "0", "0", "0", "1", "0", "1", "1", "1", "1"],
     ["0", "0", "1", "1", "0", "1", "1", "0", "0", "1", "1", "1", "1", "0", "1", "0", "1", "0", "0", "1"],
     ["1", "0", "0", "0", "0", "0", "0", "0", "0", "1", "0", "0", "0", "0", "0", "0", "1", "1", "0", "1"],
     ["1", "1", "0", "1", "1", "1", "1", "0", "1", "1", "1", "1", "1", "1", "1", "0", "1", "1", "0", "1"],
@@ -125,8 +125,11 @@ if __name__ == "__main__":
   
   for step in road:
     labyrinth[step.position.y][step.position.x] = " "
-  print("Solved labyrinth:")
-  for row in labyrinth:
-    print(row)
-  
+    
+  if (len(road) > 0):
+    print("Solved labyrinth:")
+    for row in labyrinth:
+      print(row)
+  else:
+    print("No solution found")
   print("Iterations: " + str(iterations))
